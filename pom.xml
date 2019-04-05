@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.zylklab.flink.sandbox</groupId>
-	<artifactId>cep_examples</artifactId>
+	<artifactId>flink_cep_examples</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>cep_examples</name>
+	<name>flink_cep_examples</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
