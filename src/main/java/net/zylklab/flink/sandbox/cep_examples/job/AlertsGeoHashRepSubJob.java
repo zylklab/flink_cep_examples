@@ -28,11 +28,11 @@ import net.zylklab.flink.sandbox.cep_examples.util.GeoHashEventsGenerator;
 
 
 public class AlertsGeoHashRepSubJob {
-	private static final int PAUSE = 15000;
+	private static final int PAUSE = 1000;
 	private static final int NUMBER_OF_EVENTS_STD = 100;
 	private static final int NUMBER_OF_EVENTS_MEAN = 180;
 	private static final int NUMBER_OF_ZONES = 2;
-	private static final int DELTA_LIMIT = 30;
+	private static final int DELTA_LIMIT = 10;
 	
 	public static void main(String[] args) throws Exception {
 		//final StreamExecutionEnvironment env = new BobStreamExecutionEnvironmentFactory().createExecutionEnvironment();
@@ -90,23 +90,31 @@ public class AlertsGeoHashRepSubJob {
 			}
 		});
 		
-		inputStream.print("COMPARED:");
+		inputStream.print("ENRICHED:");
 		
 		Pattern<GeoHashEvent, ?> warningPattern = Pattern.<GeoHashEvent>begin("first")
+				.subtype(GeoHashEvent.class)
 				.where(new IterativeCondition<GeoHashEvent>() {
 					@Override
 					public boolean filter(GeoHashEvent value, Context<GeoHashEvent> ctx) throws Exception {
+						System.out.println("first");
+						System.out.println((value.getTotalGPRSEvents() - Math.abs(value.getDeltaGPRSEvents()))/value.getTotalGPRSEvents());
+						System.out.println((value.getTotalGPRSEvents() - Math.abs(value.getDeltaGPRSEvents()))/value.getTotalGPRSEvents() > DELTA_LIMIT);
 						return (value.getTotalGPRSEvents() - Math.abs(value.getDeltaGPRSEvents()))/value.getTotalGPRSEvents() > DELTA_LIMIT;
 					}
 				})
 				.next("second")
+				.subtype(GeoHashEvent.class)
                 .where(new IterativeCondition<GeoHashEvent>() {
 					@Override
 					public boolean filter(GeoHashEvent value, Context<GeoHashEvent> ctx) throws Exception {
+						System.out.println("Second");
+						System.out.println((value.getTotalGPRSEvents() - Math.abs(value.getDeltaGPRSEvents()))/value.getTotalGPRSEvents());
+						System.out.println((value.getTotalGPRSEvents() - Math.abs(value.getDeltaGPRSEvents()))/value.getTotalGPRSEvents() > DELTA_LIMIT);
 						return (value.getTotalGPRSEvents() - Math.abs(value.getDeltaGPRSEvents()))/value.getTotalGPRSEvents() > DELTA_LIMIT;
 					}
 				})
-                .within(Time.minutes(15));
+                .within(Time.seconds(15));
 		
 		DataStream<Tuple2<GeoHashEvent,GeoHashEvent>> result = CEP.pattern(inputStream, warningPattern)
 				.select(
