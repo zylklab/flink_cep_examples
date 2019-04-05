@@ -6,7 +6,12 @@ There is a IoT device counting the numbers of events in a zone (for example the 
 
 These events are read from a flink job. First the job calculate the diffence between the number of events of two signals. Then the enriched events pass to a CEP pattern and if two consecutive events has an increment of 30% the job send an alarm. This is calculted per zone.
 
-This is simulate using ``GeoHashEventsGenerator`` class
+This is simulate using ``GeoHashEventsGenerator`` class invoked from ``AlertGeoHashRepSubJob`` main method
+
+```java
+DataStream<GeoHashEvent> inputEventStream = env.addSource(new GeoHashEventsGenerator(PAUSE, NUMBER_OF_EVENTS_STD, NUMBER_OF_EVENTS_MEAN, NUMBER_OF_ZONES))
+```
+where
 
 ```java
 private static final int PAUSE = 15000; 

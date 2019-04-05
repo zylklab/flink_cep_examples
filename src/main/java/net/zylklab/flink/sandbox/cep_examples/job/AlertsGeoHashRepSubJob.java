@@ -51,8 +51,7 @@ public class AlertsGeoHashRepSubJob {
 		//KeyedStream<GeoHashEvent, Tuple> keyedRecord = new BobFlinkKafkaHelper<GeoHashEvent>().getStream(env, RepSubJobsConstants.KAFKA_GEOIP_ENRICH_EVENT_TOPIC, new BobAvroDeserializationSchema<GeoHashEvent>(GeoHashEvent.class)).keyBy("geohash8");
 		//TODO: asegurar el orden por tiempo de evento
 		
-		DataStream<GeoHashEvent> inputEventStream = env
-                .addSource(new GeoHashEventsGenerator(PAUSE, NUMBER_OF_EVENTS_STD, NUMBER_OF_EVENTS_MEAN, NUMBER_OF_ZONES))
+		DataStream<GeoHashEvent> inputEventStream = env.addSource(new GeoHashEventsGenerator(PAUSE, NUMBER_OF_EVENTS_STD, NUMBER_OF_EVENTS_MEAN, NUMBER_OF_ZONES))
                 .assignTimestampsAndWatermarks(new AssignerWithPunctuatedWatermarks<GeoHashEvent>() {
 					public long extractTimestamp(GeoHashEvent event, long previousElementTimestamp) {
 						return event.getTimestamp();
