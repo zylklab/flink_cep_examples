@@ -31,7 +31,7 @@ import net.zylklab.flink.sandbox.cep_examples.pojo.GeoHashEvent;
 public class EventTimeWindowGeoHashSubJob {
 	private static final Logger _log = LoggerFactory.getLogger(EventTimeWindowGeoHashSubJob.class);
 	private static final Time WINDOW_TIME_SIZE = Time.of(5, TimeUnit.SECONDS);
-	private static final Time ALLOWED_LATENESS_TIME = Time.of(2, TimeUnit.MINUTES);
+	private static final Time ALLOWED_LATENESS_TIME = Time.of(10, TimeUnit.MINUTES);
 	private static final long MAX_OUT_OF_ORDERNESS_MS = 2000l;
 	
 	public static void main(String[] args) throws Exception {
