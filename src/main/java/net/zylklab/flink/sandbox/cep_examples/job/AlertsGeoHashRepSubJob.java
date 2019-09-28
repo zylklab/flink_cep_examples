@@ -43,32 +43,13 @@ public class AlertsGeoHashRepSubJob {
 
 	@SuppressWarnings("serial")
 	public void addJob(StreamExecutionEnvironment env) throws Exception {
-		
-		//KeyedStream<GeoHashEvent, Tuple> keyedRecord = new BobFlinkKafkaHelper<GeoHashEvent>().getStream(env, RepSubJobsConstants.KAFKA_GEOIP_ENRICH_EVENT_TOPIC, new BobAvroDeserializationSchema<GeoHashEvent>(GeoHashEvent.class)).keyBy("geohash8");
-		//TODO: asegurar el orden por tiempo de evento
-		
 		DataStream<GeoHashEvent> inputEventStream = env.addSource(new GeoHashEventsGenerator(PAUSE, NUMBER_OF_EVENTS_STD, NUMBER_OF_EVENTS_MEAN, NUMBER_OF_ZONES));
-//                .assignTimestampsAndWatermarks(new AssignerWithPunctuatedWatermarks<GeoHashEvent>() {
-//					public long extractTimestamp(GeoHashEvent event, long previousElementTimestamp) {
-//						return event.getTimestamp();
-//					}
-//					public Watermark checkAndGetNextWatermark(GeoHashEvent lastElement, long extractedTimestamp) {
-//						return new Watermark(extractedTimestamp);
-//					}
-//
-//        		});
-        
-        //Continuously prints the input events
-		//inputEventStream.print("RAW:"); 
-		
 		KeyedStream<GeoHashEvent, String> inputEventStreamKeyed = inputEventStream.keyBy(new KeySelector<GeoHashEvent, String>() {
 			@Override
 			public String getKey(GeoHashEvent value) throws Exception {
 				return value.getGeohash();
 			}
 		});
-		
-		
 		Pattern<GeoHashEvent, ?> warningPattern = Pattern.<GeoHashEvent>begin("first")
 				.where(new IterativeCondition<GeoHashEvent>() {
 					@Override
@@ -90,9 +71,6 @@ public class AlertsGeoHashRepSubJob {
 					}
 				})
                 .within(Time.minutes(15));
-		
-		
-		
 		DataStream<GeoHashEvent> inputStream = inputEventStreamKeyed.countWindow(2,1).apply(new WindowFunction<GeoHashEvent, GeoHashEvent, String, GlobalWindow>() {
 			@Override
 			public void apply(String key, GlobalWindow window, Iterable<GeoHashEvent> input, Collector<GeoHashEvent> out) throws Exception {
@@ -110,8 +88,6 @@ public class AlertsGeoHashRepSubJob {
 			}
 		});
 		
-		//inputStream.print("EVENT");
-		
 		DataStream<Tuple2<GeoHashEvent,GeoHashEvent>> result = CEP.pattern(inputStream.keyBy(new KeySelector<GeoHashEvent, String>() {
 			@Override
 			public String getKey(GeoHashEvent value) throws Exception {
@@ -127,6 +103,5 @@ public class AlertsGeoHashRepSubJob {
 				);
 		
 		result.print("ALARM");
-
 	}
 }

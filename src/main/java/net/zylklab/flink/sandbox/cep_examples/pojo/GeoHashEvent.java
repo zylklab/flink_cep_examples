@@ -9,6 +9,10 @@ public class GeoHashEvent implements Serializable {
 	private int deltaGPRSEvents;
 	private long timestamp;
 	
+	public GeoHashEvent() {
+		super();
+	}
+	
 	public GeoHashEvent(String geohash, int totalGPRSEvents, long timestamp) {
 		super();
 		this.geohash = geohash;
