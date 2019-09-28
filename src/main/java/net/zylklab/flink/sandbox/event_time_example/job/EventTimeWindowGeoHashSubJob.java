@@ -31,14 +31,14 @@ import net.zylklab.flink.sandbox.cep_examples.pojo.GeoHashEvent;
 public class EventTimeWindowGeoHashSubJob {
 	private static final Logger _log = LoggerFactory.getLogger(EventTimeWindowGeoHashSubJob.class);
 	private static final Time WINDOW_TIME_SIZE = Time.of(5, TimeUnit.SECONDS);
-	private static final Time ALLOWED_LATENESS_TIME = Time.of(0, TimeUnit.SECONDS);
+	private static final Time ALLOWED_LATENESS_TIME = Time.of(2, TimeUnit.MINUTES);
 	private static final long MAX_OUT_OF_ORDERNESS_MS = 2000l;
 	
 	public static void main(String[] args) throws Exception {
-		_log.info("Starting application");
+		_log.debug("Starting application");
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-		_log.info("Environment created.");
+		_log.debug("Environment created.");
 		EventTimeWindowGeoHashSubJob w = new EventTimeWindowGeoHashSubJob();
 		w.addJob(env);
 		env.execute("EventTimeWindowGeoHasSubJob");
@@ -48,7 +48,7 @@ public class EventTimeWindowGeoHashSubJob {
 			private static final long serialVersionUID = 2724248722149591844L;
 			@Override
 			public GeoHashEvent map(String value) throws Exception {
-				_log.info("event read "+value);
+				_log.debug("event read "+value);
 				String[] values = value.split(" ");
 				GeoHashEvent record = null;
 				if(values != null && values.length == 3) {
@@ -99,7 +99,7 @@ public class EventTimeWindowGeoHashSubJob {
 			}
 		})
 		.timeWindow(WINDOW_TIME_SIZE)
-		//.allowedLateness(ALLOWED_LATENESS_TIME)
+		.allowedLateness(ALLOWED_LATENESS_TIME)
 		.apply(new WindowFunction<GeoHashEvent, List<GeoHashEvent>, String, TimeWindow>() {
 			private static final long serialVersionUID = 6850448280789756471L;
 			@Override
@@ -110,7 +110,7 @@ public class EventTimeWindowGeoHashSubJob {
 				while(iter.hasNext()) {
 					current = iter.next();
 					records.add(current);
-					_log.info("window cdrs collected. "+current.toString());
+					_log.debug("window cdrs collected. "+current.toString());
 				}
 				
 				_log.info("window cdrs collected. "+records.size()+ " window "+new Date(window.getStart())+":"+new Date(window.getEnd()));
