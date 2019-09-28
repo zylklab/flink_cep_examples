@@ -78,6 +78,9 @@ public class EventTimeWindowGeoHashSubJob {
 			@Override
 			public long extractTimestamp(GeoHashEvent element, long previousElementTimestamp) {
 				long timestamp = element.getTimestamp();
+				if(timestamp - currentMaxTimestamp > ALLOWED_LATENESS_TIME.toMilliseconds()) { 
+					_log.warn("The event is so far in the future ... posible unordered queue");
+				}
 				currentMaxTimestamp = Math.max(timestamp, currentMaxTimestamp);
 				return timestamp;
 			}
