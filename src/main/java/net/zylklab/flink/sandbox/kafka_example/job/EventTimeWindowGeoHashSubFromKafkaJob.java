@@ -46,6 +46,10 @@ public class EventTimeWindowGeoHashSubFromKafkaJob {
 	private static final String KAFKA_BROKER = "enbarr001.bigdata.zylk.net:6667,enbarr002.bigdata.zylk.net:6667";
 	private static final String KAFKA_PROTOCOL = "SASL_PLAINTEXT";
 	private static final String KAFKA_TOPIC = "GEOHASH_EVENTS_AVRO";
+	private static final String KAFKA_KERBEROS_SERVICE_NAME = "kafka";
+	private static final String KAFKA_OFFSET = "earliest";
+	
+	
 	
 	private static final String SCHEMA_REGISTRY_CACHE_SIZE_KEY = SchemaRegistryClient.Configuration.CLASSLOADER_CACHE_SIZE.name();
 	private static final String SCHEMA_REGISTRY_CACHE_EXPIRY_INTERVAL_SECS_KEY = SchemaRegistryClient.Configuration.CLASSLOADER_CACHE_EXPIRY_INTERVAL_SECS.name();
@@ -54,10 +58,15 @@ public class EventTimeWindowGeoHashSubFromKafkaJob {
 	private static final String SCHEMA_REGISTRY_URL_KEY = SchemaRegistryClient.Configuration.SCHEMA_REGISTRY_URL.name();
 	
 	public static void main(String[] args) throws Exception {
+		System.setProperty("java.security.auth.login.config", "/home/gus/git/flink/flink_cep_examples/external-resources/jaas/jaas-client.conf");
 		_log.debug("Starting application");
 		Properties kafkaProperties = new Properties();
 		kafkaProperties.put("group.id", KAFKA_CONSUMER_GROUP);
 		kafkaProperties.put("bootstrap.servers", KAFKA_BROKER);
+		kafkaProperties.put("security.protocol", KAFKA_PROTOCOL);
+		kafkaProperties.put("sasl.kerberos.service.name", KAFKA_KERBEROS_SERVICE_NAME);
+		kafkaProperties.put("auto.offset.reset", KAFKA_OFFSET);
+		
 
 		Properties schemaRegistryProperties = new Properties();
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_CACHE_SIZE_KEY, 10L);
