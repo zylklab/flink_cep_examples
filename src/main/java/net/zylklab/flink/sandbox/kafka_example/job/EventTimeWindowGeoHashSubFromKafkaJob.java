@@ -1,5 +1,6 @@
 package net.zylklab.flink.sandbox.kafka_example.job;
 
+import org.apache.avro.generic.GenericData;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 
@@ -85,8 +86,19 @@ public class EventTimeWindowGeoHashSubFromKafkaJob {
 		env.execute("EventTimeWindowGeoHasSubJob");
 	}
 	public void addJob(StreamExecutionEnvironment env, Properties kafkaProperties, Properties schemaRegistryProperties) throws Exception {
-		DataStream<GeoHashEventAvro> dataStream = env.addSource(new FlinkKafkaConsumer<>(KAFKA_TOPIC, new HWXMagicBytesAvroDeserializationSchema<GeoHashEventAvro>(schemaRegistryProperties, GeoHashEventAvro.class), kafkaProperties))
-		//DataStream<GeoHashEventAvro> dataStream = env.addSource(new FlinkKafkaConsumer<GeoHashEventAvro>(KAFKA_TOPIC, new AvroDeserializationSchema<GeoHashEventAvro>(GeoHashEventAvro.class), kafkaProperties))
+		DataStream<GeoHashEventAvro> dataStream = env.addSource(new FlinkKafkaConsumer<>(KAFKA_TOPIC, new HWXMagicBytesAvroDeserializationSchema<GenericData.Record>(schemaRegistryProperties, GenericData.Record.class), kafkaProperties))
+		.map(new MapFunction<GenericData.Record, GeoHashEventAvro>() {
+			private static final long serialVersionUID = 8789449514871884350L;
+			@Override
+			public GeoHashEventAvro map(GenericData.Record value) throws Exception {
+				//TODO: Revisar cual es la mejor forma de mapear el objeto...
+				GeoHashEventAvro a = new GeoHashEventAvro();
+				a.setTotalGPRSEvents(Integer.class.cast(value.get("totalGPRSEvents")));
+				a.setTimestamp(Long.class.cast(value.get("timestamp")));
+				a.setGeohash(org.apache.avro.util.Utf8.class.cast(value.get("geohash")).toString());
+				return a;
+			}
+		})
 		.filter(new FilterFunction<GeoHashEventAvro>() {
 			private static final long serialVersionUID = -191514705055797924L;
 			@Override

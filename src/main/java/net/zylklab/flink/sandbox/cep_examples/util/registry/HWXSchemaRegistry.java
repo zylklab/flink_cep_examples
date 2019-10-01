@@ -14,35 +14,28 @@ import com.hortonworks.registries.schemaregistry.client.SchemaRegistryClient;
 import com.hortonworks.registries.schemaregistry.errors.SchemaNotFoundException;
 import com.hortonworks.registries.schemaregistry.serdes.avro.AvroSnapshotDeserializer;
 
-import net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.GeoHashEventAvro;
 
 
-
-public class HWXSchemaRegistry<T> {
+public class HWXSchemaRegistry {
 	private static final Logger _log = LoggerFactory.getLogger(HWXSchemaRegistry.class);
-	
 	private SchemaRegistryClient client;
+	private Map<String,Object> config;
 	private AvroSnapshotDeserializer deserializer;
-	private Class<T> avroType;
+	private static HWXSchemaRegistry singleon = null;
 	
-	
-	public HWXSchemaRegistry(Properties schemaRegistryConfig, Class<T> avroType) {
-		_log.debug("Init SchemaRegistry Client");
-		this.client = new SchemaRegistryClient(HWXSchemaRegistry.properties2Map(schemaRegistryConfig));
-		try {
-			_log.info("-----------> "+this.client.getAllVersions("geohash").size());
-		} catch (SchemaNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		_log.debug("Init deserializer");
-		deserializer = this.client.getDefaultDeserializer(AvroSchemaProvider.TYPE);
-		this.avroType = avroType;
+	public static HWXSchemaRegistry getInstance(Properties schemaRegistryConfig) {
+		if(singleon == null)
+			singleon = new HWXSchemaRegistry(schemaRegistryConfig);
+		return singleon;
 	}
 	
-	public T deserialize(byte[] message) throws IOException {
-		Object o = deserializer.deserialize(new ByteArrayInputStream(message));
-		return avroType.cast(o);
+	public Object deserialize(byte[] message) throws IOException {
+		if(message != null)
+			_log.debug("messsage "+message.length);
+		else
+			_log.debug("messsage is null");
+		Object o = singleon.deserializer.deserialize(new ByteArrayInputStream(message), null);
+		return o;
 	}
 	
 	private static Map<String,Object> properties2Map(Properties config) {
@@ -54,9 +47,27 @@ public class HWXSchemaRegistry<T> {
 		}
 		return configMap;
 	}
+	
+	private HWXSchemaRegistry(Properties schemaRegistryConfig) {
+		_log.debug("Init SchemaRegistry Client");
+		this.config = HWXSchemaRegistry.properties2Map(schemaRegistryConfig);
+		this.client = new SchemaRegistryClient(this.config);
+		try {
+			_log.info("-----------> "+this.client.getAllVersions("geohash").size());
+		} catch (SchemaNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		_log.debug("Create the deserializer");
+		this.deserializer = this.client.getDefaultDeserializer(AvroSchemaProvider.TYPE);
+		_log.debug("Initialize the deserializer");
+		this.deserializer.init(this.config);
+	}
+	
+	
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		//se puede pasar como -Djava.security.auth.login.config
 		System.setProperty("java.security.auth.login.config", "/home/gus/git/flink/flink_cep_examples/external-resources/jaas/jaas-client.conf");
 		
@@ -72,7 +83,8 @@ public class HWXSchemaRegistry<T> {
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_SCHEMA_VERSION_CACHE_SIZE_KEY, 1000L);
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_SCHEMA_VERSION_CACHE_EXPIRY_INTERVAL_SECS_KEY, 60 * 60 * 1000L);
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_URL_KEY, "http://enbarr001.bigdata.zylk.net:7788/api/v1");
+		byte[] message = {};
+		HWXSchemaRegistry.getInstance(schemaRegistryProperties).deserialize(message);
 		
-		HWXSchemaRegistry<GeoHashEventAvro> a = new HWXSchemaRegistry<GeoHashEventAvro>(schemaRegistryProperties, GeoHashEventAvro.class);
 	}
 }
