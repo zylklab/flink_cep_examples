@@ -19,7 +19,7 @@ import org.apache.flink.streaming.api.windowing.windows.GlobalWindow;
 import org.apache.flink.util.Collector;
 
 import net.zylklab.flink.sandbox.cep_examples.pojo.GeoHashEvent;
-import net.zylklab.flink.sandbox.cep_examples.util.GeoHashEventsGenerator;
+import net.zylklab.flink.sandbox.cep_examples.util.generator.GeoHashEventsGenerator;
 
 
 

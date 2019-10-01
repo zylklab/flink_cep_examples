@@ -1,0 +1,11 @@
+{
+	"namespace": "net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo",
+	"type": "record",
+	"name": "GeoHashEventAvro",
+	"fields": 
+	[
+		{"name": "geohash",			"type": ["null","string"], "default": null},
+		{"name": "totalGPRSEvents",	"type": ["null","int"], 	"default": null},
+		{"name": "timestamp",		"type": ["null","long"], 	"default": null}
+	]
+}

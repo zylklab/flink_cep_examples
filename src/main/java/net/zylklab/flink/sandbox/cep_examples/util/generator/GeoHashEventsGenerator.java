@@ -1,4 +1,4 @@
-package net.zylklab.flink.sandbox.cep_examples.util;
+package net.zylklab.flink.sandbox.cep_examples.util.generator;
 
 import java.util.Random;
 
