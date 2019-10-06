@@ -49,7 +49,7 @@ public class EventTimeWindowGeoHashSubFromKafkaJob {
 	private static final String KAFKA_TOPIC = "GEOHASH_EVENTS_AVRO";
 	private static final String KAFKA_KERBEROS_SERVICE_NAME = "kafka";
 	private static final String KAFKA_OFFSET = "earliest";
-	
+	private static final String HWX_SCHEMA_REGISTRY = "http://enbarr001.bigdata.zylk.net:7788/api/v1";
 	
 	
 	private static final String SCHEMA_REGISTRY_CACHE_SIZE_KEY = SchemaRegistryClient.Configuration.CLASSLOADER_CACHE_SIZE.name();
@@ -74,7 +74,7 @@ public class EventTimeWindowGeoHashSubFromKafkaJob {
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_CACHE_EXPIRY_INTERVAL_SECS_KEY, 5000L);
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_SCHEMA_VERSION_CACHE_SIZE_KEY, 1000L);
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_SCHEMA_VERSION_CACHE_EXPIRY_INTERVAL_SECS_KEY, 60 * 60 * 1000L);
-		schemaRegistryProperties.put(SCHEMA_REGISTRY_URL_KEY, "http://enbarr001.bigdata.zylk.net:7788/api/v1");
+		schemaRegistryProperties.put(SCHEMA_REGISTRY_URL_KEY, HWX_SCHEMA_REGISTRY);
 		
 		
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
