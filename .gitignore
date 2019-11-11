@@ -1,4 +1,8 @@
 # Directories #
+/not-shared
+**/not-shared
+/not-shared/
+**/not-shared/
 /build/
 /bin/
 **/bin/
