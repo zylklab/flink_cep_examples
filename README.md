@@ -214,6 +214,6 @@ There is a IoT device counting the numbers of different events in a zone (for ex
       value:DOUBLE,
       `timestamp`:TIMESTAMP>>
   STORED AS ORC
-  LOCATION "/aian/processed_events"
+  LOCATION "/processed_events"
 ```
   where *LOCATION* path is the HDFS location where processed events are stored.
