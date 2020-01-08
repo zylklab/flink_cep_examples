@@ -137,7 +137,7 @@ There is a IoT device counting the numbers of different events in a zone (for ex
   		{"name": "numberOfRecords",     "type": ["null","long"],    "default": null},
   		{"name": "meanTs",              "type": ["null","long"],    "default": null},
   		{"name": "minTs",               "type": ["null","long"],    "default": null},
-  		{"name": "gapTs",               "type": ["null","long"],    "default": null},
+  		{"name": "maxTs",               "type": ["null","long"],    "default": null},
   		{"name": "meanValue",           "type": ["null","double"],  "default": null},
   		{"name": "minValue",            "type": ["null","double"],  "default": null},
   		{"name": "maxValue",            "type": ["null","double"],  "default": null},
