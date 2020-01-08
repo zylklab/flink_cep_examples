@@ -185,17 +185,17 @@ There is a IoT device counting the numbers of different events in a zone (for ex
   private static final Integer TOPIC_PARTITIONS = 2;
   ```
 
-   * **WINDOW_TIME_SIZE** the size (time) of the window
-   * **ALLOWED_LATENESS_TIME** the time that an already processed window can be reprocessed if an event belonging to this window arraives
-   * **MAX_OUT_OF_ORDERNESS_MS** the maximum time it takes for a window to launch for the first time, allows waiting for messy events to arrive without getting lost
-   * WATERMARK_INTERVAL_MS the interval (time) in which the watermark will be updated
-   * **BOOTSTRAP_SERVERS** the kafka broker list
-   * **GROUP_ID** the consumer group name
-   * **SOURCE_TOPIC** the raw events kafka topic
-   * **SINK_TOPIC** the processed events kafka topic
-   * **TOPIC_PARTITIONS** the number of partitions of the *SOURCE_TOPIC*
+ * **WINDOW_TIME_SIZE** the size (time) of the window
+ * **ALLOWED_LATENESS_TIME** the time that an already processed window can be reprocessed if an event belonging to this window arraives
+ * **MAX_OUT_OF_ORDERNESS_MS** the maximum time it takes for a window to launch for the first time, allows waiting for messy events to arrive without getting lost
+ * WATERMARK_INTERVAL_MS the interval (time) in which the watermark will be updated
+ * **BOOTSTRAP_SERVERS** the kafka broker list
+ * **GROUP_ID** the consumer group name
+ * **SOURCE_TOPIC** the raw events kafka topic
+ * **SINK_TOPIC** the processed events kafka topic
+ * **TOPIC_PARTITIONS** the number of partitions of the *SOURCE_TOPIC*
 
- * The processed events are sent back to a Kafka topic (*SINK_TOPIC*), consumed by NiFi and stored in HDFS as ORC format.
+The processed events are sent back to a Kafka topic (*SINK_TOPIC*), consumed by NiFi and stored in HDFS as ORC format.
  * The Hive DDL sentence to create the external table is:
 
  ```Hive
