@@ -11,13 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import com.hortonworks.registries.schemaregistry.avro.AvroSchemaProvider;
 import com.hortonworks.registries.schemaregistry.client.SchemaRegistryClient;
-import com.hortonworks.registries.schemaregistry.errors.SchemaNotFoundException;
 import com.hortonworks.registries.schemaregistry.serdes.avro.AvroSnapshotDeserializer;
 
 
 
 public class HWXSchemaRegistry {
-	private static final Logger _log = LoggerFactory.getLogger(HWXSchemaRegistry.class);
+	//private static final Logger _log = LoggerFactory.getLogger(HWXSchemaRegistry.class);
 	private SchemaRegistryClient client;
 	private Map<String,Object> config;
 	private AvroSnapshotDeserializer deserializer;
@@ -31,14 +30,14 @@ public class HWXSchemaRegistry {
 	
 	public Object deserialize(byte[] message) throws IOException {
 		if(message != null)
-			_log.debug("messsage "+message.length);
+			System.out.println("messsage "+message.length);
 		else
-			_log.debug("messsage is null");
+			System.out.println("messsage is null");
 		Object o = singleon.deserializer.deserialize(new ByteArrayInputStream(message), null);
 		return o;
 	}
 	
-	private static Map<String,Object> properties2Map(Properties config) {
+	protected static Map<String,Object> properties2Map(Properties config) {
 		Enumeration<Object> keys = config.keys();
 		Map<String, Object> configMap = new HashMap<String,Object>();
 		while (keys.hasMoreElements()) {
@@ -49,18 +48,18 @@ public class HWXSchemaRegistry {
 	}
 	
 	private HWXSchemaRegistry(Properties schemaRegistryConfig) {
-		_log.debug("Init SchemaRegistry Client");
+		System.out.println("Init SchemaRegistry Client");
 		this.config = HWXSchemaRegistry.properties2Map(schemaRegistryConfig);
 		this.client = new SchemaRegistryClient(this.config);
 		try {
-			_log.info("-----------> "+this.client.getAllVersions("geohash").size());
-		} catch (SchemaNotFoundException e) {
+			System.out.println("-----------> "+this.client.getAllVersions("geohash").size());
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		_log.debug("Create the deserializer");
+		System.out.println("Create the deserializer");
 		this.deserializer = this.client.getDefaultDeserializer(AvroSchemaProvider.TYPE);
-		_log.debug("Initialize the deserializer");
+		System.out.println("Initialize the deserializer");
 		this.deserializer.init(this.config);
 	}
 	
@@ -68,9 +67,19 @@ public class HWXSchemaRegistry {
 
 	
 	public static void main(String[] args) throws IOException {
-		//se puede pasar como -Djava.security.auth.login.config
-		System.setProperty("java.security.auth.login.config", "/home/gus/git/flink/flink_cep_examples/external-resources/jaas/jaas-client.conf");
 		
+		
+		//se puede pasar como -Djava.security.auth.login.config
+		String jaasClientFile = "/home/gus/git/flink/flink_cep_examples/external-resources/jaas/jaas-client.conf";
+		String hwxRegistryUrl = "http://enbarr001.bigdata.zylk.net:7788/api/v1"; 
+		if (args != null && args.length == 2) {
+			jaasClientFile = args[0];
+			hwxRegistryUrl = args[1];
+		}
+		System.out.println("**************************************jaasClientFile "+jaasClientFile);
+		System.out.println("**************************************hwxRegistryUrl "+hwxRegistryUrl);
+		
+		System.setProperty("java.security.auth.login.config", jaasClientFile);
 		final String SCHEMA_REGISTRY_CACHE_SIZE_KEY = SchemaRegistryClient.Configuration.CLASSLOADER_CACHE_SIZE.name();
 		final String SCHEMA_REGISTRY_CACHE_EXPIRY_INTERVAL_SECS_KEY = SchemaRegistryClient.Configuration.CLASSLOADER_CACHE_EXPIRY_INTERVAL_SECS.name();
 		final String SCHEMA_REGISTRY_SCHEMA_VERSION_CACHE_SIZE_KEY = SchemaRegistryClient.Configuration.SCHEMA_VERSION_CACHE_SIZE.name();
@@ -82,9 +91,12 @@ public class HWXSchemaRegistry {
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_CACHE_EXPIRY_INTERVAL_SECS_KEY, 5000L);
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_SCHEMA_VERSION_CACHE_SIZE_KEY, 1000L);
 		schemaRegistryProperties.put(SCHEMA_REGISTRY_SCHEMA_VERSION_CACHE_EXPIRY_INTERVAL_SECS_KEY, 60 * 60 * 1000L);
-		schemaRegistryProperties.put(SCHEMA_REGISTRY_URL_KEY, "http://enbarr001.bigdata.zylk.net:7788/api/v1");
+		schemaRegistryProperties.put(SCHEMA_REGISTRY_URL_KEY, hwxRegistryUrl);
 		byte[] message = {};
-		HWXSchemaRegistry.getInstance(schemaRegistryProperties).deserialize(message);
-		
+		System.out.println("**************************************111111 ");
+		HWXSchemaRegistry a = HWXSchemaRegistry.getInstance(schemaRegistryProperties);
+		System.out.println("**************************************222222 ");
+		Object b = a.deserialize(message);
+		System.out.println("**************************************333333 ");
 	}
 }
