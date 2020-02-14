@@ -1,0 +1,1 @@
+Hay que tener el cliente de kerberos instalado en el Sistema Operativo
