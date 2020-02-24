@@ -81,6 +81,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20190722</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.hortonworks.registries</groupId>
 			<artifactId>schema-registry-client</artifactId>
 			<version>${schema-registry.version}</version>

@@ -3,14 +3,11 @@ package net.zylklab.kafka.kerberos;
 import java.util.Date;
 import java.util.Properties;
 
-import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.apache.velocity.runtime.parser.node.SetPropertyExecutor;
 import org.json.JSONObject;
 
 
@@ -20,8 +17,8 @@ public class KafkaProducerWithKerberos {
 	private static final String KAFKA_PROTOCOL = "SASL_PLAINTEXT";
 	private static final String KAFKA_TOPIC = "KERBEROS_JSON";
 	private static final String KAFKA_KERBEROS_SERVICE_NAME = "kafka";
-	private static final String JAAS_CLIENT_CONF = "/home/aian/pruebas/kafka-kerberos/jaas-client.conf";
-	private static final String KRB5_CONF = "/home/aian/pruebas/kafka-kerberos/krb5.conf";
+	private static final String JAAS_CLIENT_CONF = "/home/gus/git/flink/flink_cep_examples/external-resources/jaas/jaas-client.conf";
+	private static final String KRB5_CONF = "/home/gus/git/flink/flink_cep_examples/external-resources/jaas/krb5.conf";
 
 	public static void main(String[] args) {
 		System.setProperty("java.security.auth.login.config", JAAS_CLIENT_CONF);
