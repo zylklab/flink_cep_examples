@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -2782145269302488654L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ProcessedEvent\",\"namespace\":\"net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo\",\"fields\":[{\"name\":\"id\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"numberOfRecords\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"meanTs\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"startTs\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"endTs\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"meanValue\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"minValue\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"maxValue\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"err\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"records\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"RawEvent\",\"fields\":[{\"name\":\"id\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"value\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"timestamp\",\"type\":[\"null\",\"long\"],\"default\":null}]}}}]}");
+  private static final long serialVersionUID = 4961529781852559885L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ProcessedEvent\",\"namespace\":\"net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo\",\"fields\":[{\"name\":\"factory\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"var_id\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"numberOfRecords\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"meanTs\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"startTs\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"endTs\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"meanValue\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"minValue\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"maxValue\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"err\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"records\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"RawEvent\",\"fields\":[{\"name\":\"factory\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"var_id\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"value\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"timestamp\",\"type\":[\"null\",\"long\"],\"default\":null}]}}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -71,7 +71,8 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.Integer id;
+  @Deprecated public java.lang.String factory;
+  @Deprecated public java.lang.Integer var_id;
   @Deprecated public java.lang.Long numberOfRecords;
   @Deprecated public java.lang.Long meanTs;
   @Deprecated public java.lang.Long startTs;
@@ -91,7 +92,8 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
 
   /**
    * All-args constructor.
-   * @param id The new value for id
+   * @param factory The new value for factory
+   * @param var_id The new value for var_id
    * @param numberOfRecords The new value for numberOfRecords
    * @param meanTs The new value for meanTs
    * @param startTs The new value for startTs
@@ -102,8 +104,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
    * @param err The new value for err
    * @param records The new value for records
    */
-  public ProcessedEvent(java.lang.Integer id, java.lang.Long numberOfRecords, java.lang.Long meanTs, java.lang.Long startTs, java.lang.Long endTs, java.lang.Double meanValue, java.lang.Double minValue, java.lang.Double maxValue, java.lang.Double err, java.util.List<net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent> records) {
-    this.id = id;
+  public ProcessedEvent(java.lang.String factory, java.lang.Integer var_id, java.lang.Long numberOfRecords, java.lang.Long meanTs, java.lang.Long startTs, java.lang.Long endTs, java.lang.Double meanValue, java.lang.Double minValue, java.lang.Double maxValue, java.lang.Double err, java.util.List<net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent> records) {
+    this.factory = factory;
+    this.var_id = var_id;
     this.numberOfRecords = numberOfRecords;
     this.meanTs = meanTs;
     this.startTs = startTs;
@@ -120,16 +123,17 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return id;
-    case 1: return numberOfRecords;
-    case 2: return meanTs;
-    case 3: return startTs;
-    case 4: return endTs;
-    case 5: return meanValue;
-    case 6: return minValue;
-    case 7: return maxValue;
-    case 8: return err;
-    case 9: return records;
+    case 0: return factory;
+    case 1: return var_id;
+    case 2: return numberOfRecords;
+    case 3: return meanTs;
+    case 4: return startTs;
+    case 5: return endTs;
+    case 6: return meanValue;
+    case 7: return minValue;
+    case 8: return maxValue;
+    case 9: return err;
+    case 10: return records;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -138,35 +142,53 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: id = (java.lang.Integer)value$; break;
-    case 1: numberOfRecords = (java.lang.Long)value$; break;
-    case 2: meanTs = (java.lang.Long)value$; break;
-    case 3: startTs = (java.lang.Long)value$; break;
-    case 4: endTs = (java.lang.Long)value$; break;
-    case 5: meanValue = (java.lang.Double)value$; break;
-    case 6: minValue = (java.lang.Double)value$; break;
-    case 7: maxValue = (java.lang.Double)value$; break;
-    case 8: err = (java.lang.Double)value$; break;
-    case 9: records = (java.util.List<net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent>)value$; break;
+    case 0: factory = (java.lang.String)value$; break;
+    case 1: var_id = (java.lang.Integer)value$; break;
+    case 2: numberOfRecords = (java.lang.Long)value$; break;
+    case 3: meanTs = (java.lang.Long)value$; break;
+    case 4: startTs = (java.lang.Long)value$; break;
+    case 5: endTs = (java.lang.Long)value$; break;
+    case 6: meanValue = (java.lang.Double)value$; break;
+    case 7: minValue = (java.lang.Double)value$; break;
+    case 8: maxValue = (java.lang.Double)value$; break;
+    case 9: err = (java.lang.Double)value$; break;
+    case 10: records = (java.util.List<net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent>)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
 
   /**
-   * Gets the value of the 'id' field.
-   * @return The value of the 'id' field.
+   * Gets the value of the 'factory' field.
+   * @return The value of the 'factory' field.
    */
-  public java.lang.Integer getId() {
-    return id;
+  public java.lang.String getFactory() {
+    return factory;
   }
 
 
   /**
-   * Sets the value of the 'id' field.
+   * Sets the value of the 'factory' field.
    * @param value the value to set.
    */
-  public void setId(java.lang.Integer value) {
-    this.id = value;
+  public void setFactory(java.lang.String value) {
+    this.factory = value;
+  }
+
+  /**
+   * Gets the value of the 'var_id' field.
+   * @return The value of the 'var_id' field.
+   */
+  public java.lang.Integer getVarId() {
+    return var_id;
+  }
+
+
+  /**
+   * Sets the value of the 'var_id' field.
+   * @param value the value to set.
+   */
+  public void setVarId(java.lang.Integer value) {
+    this.var_id = value;
   }
 
   /**
@@ -362,7 +384,8 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ProcessedEvent>
     implements org.apache.avro.data.RecordBuilder<ProcessedEvent> {
 
-    private java.lang.Integer id;
+    private java.lang.String factory;
+    private java.lang.Integer var_id;
     private java.lang.Long numberOfRecords;
     private java.lang.Long meanTs;
     private java.lang.Long startTs;
@@ -384,45 +407,49 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
      */
     private Builder(net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.factory)) {
+        this.factory = data().deepCopy(fields()[0].schema(), other.factory);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.numberOfRecords)) {
-        this.numberOfRecords = data().deepCopy(fields()[1].schema(), other.numberOfRecords);
+      if (isValidValue(fields()[1], other.var_id)) {
+        this.var_id = data().deepCopy(fields()[1].schema(), other.var_id);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.meanTs)) {
-        this.meanTs = data().deepCopy(fields()[2].schema(), other.meanTs);
+      if (isValidValue(fields()[2], other.numberOfRecords)) {
+        this.numberOfRecords = data().deepCopy(fields()[2].schema(), other.numberOfRecords);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.startTs)) {
-        this.startTs = data().deepCopy(fields()[3].schema(), other.startTs);
+      if (isValidValue(fields()[3], other.meanTs)) {
+        this.meanTs = data().deepCopy(fields()[3].schema(), other.meanTs);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
-      if (isValidValue(fields()[4], other.endTs)) {
-        this.endTs = data().deepCopy(fields()[4].schema(), other.endTs);
+      if (isValidValue(fields()[4], other.startTs)) {
+        this.startTs = data().deepCopy(fields()[4].schema(), other.startTs);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.meanValue)) {
-        this.meanValue = data().deepCopy(fields()[5].schema(), other.meanValue);
+      if (isValidValue(fields()[5], other.endTs)) {
+        this.endTs = data().deepCopy(fields()[5].schema(), other.endTs);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
-      if (isValidValue(fields()[6], other.minValue)) {
-        this.minValue = data().deepCopy(fields()[6].schema(), other.minValue);
+      if (isValidValue(fields()[6], other.meanValue)) {
+        this.meanValue = data().deepCopy(fields()[6].schema(), other.meanValue);
         fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
-      if (isValidValue(fields()[7], other.maxValue)) {
-        this.maxValue = data().deepCopy(fields()[7].schema(), other.maxValue);
+      if (isValidValue(fields()[7], other.minValue)) {
+        this.minValue = data().deepCopy(fields()[7].schema(), other.minValue);
         fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
-      if (isValidValue(fields()[8], other.err)) {
-        this.err = data().deepCopy(fields()[8].schema(), other.err);
+      if (isValidValue(fields()[8], other.maxValue)) {
+        this.maxValue = data().deepCopy(fields()[8].schema(), other.maxValue);
         fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
-      if (isValidValue(fields()[9], other.records)) {
-        this.records = data().deepCopy(fields()[9].schema(), other.records);
+      if (isValidValue(fields()[9], other.err)) {
+        this.err = data().deepCopy(fields()[9].schema(), other.err);
         fieldSetFlags()[9] = other.fieldSetFlags()[9];
+      }
+      if (isValidValue(fields()[10], other.records)) {
+        this.records = data().deepCopy(fields()[10].schema(), other.records);
+        fieldSetFlags()[10] = other.fieldSetFlags()[10];
       }
     }
 
@@ -432,85 +459,129 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
      */
     private Builder(net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent other) {
       super(SCHEMA$);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.factory)) {
+        this.factory = data().deepCopy(fields()[0].schema(), other.factory);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.numberOfRecords)) {
-        this.numberOfRecords = data().deepCopy(fields()[1].schema(), other.numberOfRecords);
+      if (isValidValue(fields()[1], other.var_id)) {
+        this.var_id = data().deepCopy(fields()[1].schema(), other.var_id);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.meanTs)) {
-        this.meanTs = data().deepCopy(fields()[2].schema(), other.meanTs);
+      if (isValidValue(fields()[2], other.numberOfRecords)) {
+        this.numberOfRecords = data().deepCopy(fields()[2].schema(), other.numberOfRecords);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.startTs)) {
-        this.startTs = data().deepCopy(fields()[3].schema(), other.startTs);
+      if (isValidValue(fields()[3], other.meanTs)) {
+        this.meanTs = data().deepCopy(fields()[3].schema(), other.meanTs);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.endTs)) {
-        this.endTs = data().deepCopy(fields()[4].schema(), other.endTs);
+      if (isValidValue(fields()[4], other.startTs)) {
+        this.startTs = data().deepCopy(fields()[4].schema(), other.startTs);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.meanValue)) {
-        this.meanValue = data().deepCopy(fields()[5].schema(), other.meanValue);
+      if (isValidValue(fields()[5], other.endTs)) {
+        this.endTs = data().deepCopy(fields()[5].schema(), other.endTs);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.minValue)) {
-        this.minValue = data().deepCopy(fields()[6].schema(), other.minValue);
+      if (isValidValue(fields()[6], other.meanValue)) {
+        this.meanValue = data().deepCopy(fields()[6].schema(), other.meanValue);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.maxValue)) {
-        this.maxValue = data().deepCopy(fields()[7].schema(), other.maxValue);
+      if (isValidValue(fields()[7], other.minValue)) {
+        this.minValue = data().deepCopy(fields()[7].schema(), other.minValue);
         fieldSetFlags()[7] = true;
       }
-      if (isValidValue(fields()[8], other.err)) {
-        this.err = data().deepCopy(fields()[8].schema(), other.err);
+      if (isValidValue(fields()[8], other.maxValue)) {
+        this.maxValue = data().deepCopy(fields()[8].schema(), other.maxValue);
         fieldSetFlags()[8] = true;
       }
-      if (isValidValue(fields()[9], other.records)) {
-        this.records = data().deepCopy(fields()[9].schema(), other.records);
+      if (isValidValue(fields()[9], other.err)) {
+        this.err = data().deepCopy(fields()[9].schema(), other.err);
         fieldSetFlags()[9] = true;
+      }
+      if (isValidValue(fields()[10], other.records)) {
+        this.records = data().deepCopy(fields()[10].schema(), other.records);
+        fieldSetFlags()[10] = true;
       }
     }
 
     /**
-      * Gets the value of the 'id' field.
+      * Gets the value of the 'factory' field.
       * @return The value.
       */
-    public java.lang.Integer getId() {
-      return id;
+    public java.lang.String getFactory() {
+      return factory;
     }
 
 
     /**
-      * Sets the value of the 'id' field.
-      * @param value The value of 'id'.
+      * Sets the value of the 'factory' field.
+      * @param value The value of 'factory'.
       * @return This builder.
       */
-    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setId(java.lang.Integer value) {
+    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setFactory(java.lang.String value) {
       validate(fields()[0], value);
-      this.id = value;
+      this.factory = value;
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'id' field has been set.
-      * @return True if the 'id' field has been set, false otherwise.
+      * Checks whether the 'factory' field has been set.
+      * @return True if the 'factory' field has been set, false otherwise.
       */
-    public boolean hasId() {
+    public boolean hasFactory() {
       return fieldSetFlags()[0];
     }
 
 
     /**
-      * Clears the value of the 'id' field.
+      * Clears the value of the 'factory' field.
       * @return This builder.
       */
-    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearId() {
-      id = null;
+    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearFactory() {
+      factory = null;
       fieldSetFlags()[0] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'var_id' field.
+      * @return The value.
+      */
+    public java.lang.Integer getVarId() {
+      return var_id;
+    }
+
+
+    /**
+      * Sets the value of the 'var_id' field.
+      * @param value The value of 'var_id'.
+      * @return This builder.
+      */
+    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setVarId(java.lang.Integer value) {
+      validate(fields()[1], value);
+      this.var_id = value;
+      fieldSetFlags()[1] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'var_id' field has been set.
+      * @return True if the 'var_id' field has been set, false otherwise.
+      */
+    public boolean hasVarId() {
+      return fieldSetFlags()[1];
+    }
+
+
+    /**
+      * Clears the value of the 'var_id' field.
+      * @return This builder.
+      */
+    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearVarId() {
+      var_id = null;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -529,9 +600,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setNumberOfRecords(java.lang.Long value) {
-      validate(fields()[1], value);
+      validate(fields()[2], value);
       this.numberOfRecords = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -540,7 +611,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'numberOfRecords' field has been set, false otherwise.
       */
     public boolean hasNumberOfRecords() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[2];
     }
 
 
@@ -550,7 +621,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearNumberOfRecords() {
       numberOfRecords = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -569,9 +640,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setMeanTs(java.lang.Long value) {
-      validate(fields()[2], value);
+      validate(fields()[3], value);
       this.meanTs = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -580,7 +651,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'meanTs' field has been set, false otherwise.
       */
     public boolean hasMeanTs() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[3];
     }
 
 
@@ -590,7 +661,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearMeanTs() {
       meanTs = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -609,9 +680,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setStartTs(java.lang.Long value) {
-      validate(fields()[3], value);
+      validate(fields()[4], value);
       this.startTs = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[4] = true;
       return this;
     }
 
@@ -620,7 +691,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'startTs' field has been set, false otherwise.
       */
     public boolean hasStartTs() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[4];
     }
 
 
@@ -630,7 +701,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearStartTs() {
       startTs = null;
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -649,9 +720,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setEndTs(java.lang.Long value) {
-      validate(fields()[4], value);
+      validate(fields()[5], value);
       this.endTs = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[5] = true;
       return this;
     }
 
@@ -660,7 +731,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'endTs' field has been set, false otherwise.
       */
     public boolean hasEndTs() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[5];
     }
 
 
@@ -670,7 +741,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearEndTs() {
       endTs = null;
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[5] = false;
       return this;
     }
 
@@ -689,9 +760,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setMeanValue(java.lang.Double value) {
-      validate(fields()[5], value);
+      validate(fields()[6], value);
       this.meanValue = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[6] = true;
       return this;
     }
 
@@ -700,7 +771,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'meanValue' field has been set, false otherwise.
       */
     public boolean hasMeanValue() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[6];
     }
 
 
@@ -710,7 +781,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearMeanValue() {
       meanValue = null;
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[6] = false;
       return this;
     }
 
@@ -729,9 +800,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setMinValue(java.lang.Double value) {
-      validate(fields()[6], value);
+      validate(fields()[7], value);
       this.minValue = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[7] = true;
       return this;
     }
 
@@ -740,7 +811,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'minValue' field has been set, false otherwise.
       */
     public boolean hasMinValue() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[7];
     }
 
 
@@ -750,7 +821,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearMinValue() {
       minValue = null;
-      fieldSetFlags()[6] = false;
+      fieldSetFlags()[7] = false;
       return this;
     }
 
@@ -769,9 +840,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setMaxValue(java.lang.Double value) {
-      validate(fields()[7], value);
+      validate(fields()[8], value);
       this.maxValue = value;
-      fieldSetFlags()[7] = true;
+      fieldSetFlags()[8] = true;
       return this;
     }
 
@@ -780,7 +851,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'maxValue' field has been set, false otherwise.
       */
     public boolean hasMaxValue() {
-      return fieldSetFlags()[7];
+      return fieldSetFlags()[8];
     }
 
 
@@ -790,7 +861,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearMaxValue() {
       maxValue = null;
-      fieldSetFlags()[7] = false;
+      fieldSetFlags()[8] = false;
       return this;
     }
 
@@ -809,9 +880,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setErr(java.lang.Double value) {
-      validate(fields()[8], value);
+      validate(fields()[9], value);
       this.err = value;
-      fieldSetFlags()[8] = true;
+      fieldSetFlags()[9] = true;
       return this;
     }
 
@@ -820,7 +891,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'err' field has been set, false otherwise.
       */
     public boolean hasErr() {
-      return fieldSetFlags()[8];
+      return fieldSetFlags()[9];
     }
 
 
@@ -830,7 +901,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearErr() {
       err = null;
-      fieldSetFlags()[8] = false;
+      fieldSetFlags()[9] = false;
       return this;
     }
 
@@ -849,9 +920,9 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder setRecords(java.util.List<net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent> value) {
-      validate(fields()[9], value);
+      validate(fields()[10], value);
       this.records = value;
-      fieldSetFlags()[9] = true;
+      fieldSetFlags()[10] = true;
       return this;
     }
 
@@ -860,7 +931,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'records' field has been set, false otherwise.
       */
     public boolean hasRecords() {
-      return fieldSetFlags()[9];
+      return fieldSetFlags()[10];
     }
 
 
@@ -870,7 +941,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.ProcessedEvent.Builder clearRecords() {
       records = null;
-      fieldSetFlags()[9] = false;
+      fieldSetFlags()[10] = false;
       return this;
     }
 
@@ -879,16 +950,17 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
     public ProcessedEvent build() {
       try {
         ProcessedEvent record = new ProcessedEvent();
-        record.id = fieldSetFlags()[0] ? this.id : (java.lang.Integer) defaultValue(fields()[0]);
-        record.numberOfRecords = fieldSetFlags()[1] ? this.numberOfRecords : (java.lang.Long) defaultValue(fields()[1]);
-        record.meanTs = fieldSetFlags()[2] ? this.meanTs : (java.lang.Long) defaultValue(fields()[2]);
-        record.startTs = fieldSetFlags()[3] ? this.startTs : (java.lang.Long) defaultValue(fields()[3]);
-        record.endTs = fieldSetFlags()[4] ? this.endTs : (java.lang.Long) defaultValue(fields()[4]);
-        record.meanValue = fieldSetFlags()[5] ? this.meanValue : (java.lang.Double) defaultValue(fields()[5]);
-        record.minValue = fieldSetFlags()[6] ? this.minValue : (java.lang.Double) defaultValue(fields()[6]);
-        record.maxValue = fieldSetFlags()[7] ? this.maxValue : (java.lang.Double) defaultValue(fields()[7]);
-        record.err = fieldSetFlags()[8] ? this.err : (java.lang.Double) defaultValue(fields()[8]);
-        record.records = fieldSetFlags()[9] ? this.records : (java.util.List<net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent>) defaultValue(fields()[9]);
+        record.factory = fieldSetFlags()[0] ? this.factory : (java.lang.String) defaultValue(fields()[0]);
+        record.var_id = fieldSetFlags()[1] ? this.var_id : (java.lang.Integer) defaultValue(fields()[1]);
+        record.numberOfRecords = fieldSetFlags()[2] ? this.numberOfRecords : (java.lang.Long) defaultValue(fields()[2]);
+        record.meanTs = fieldSetFlags()[3] ? this.meanTs : (java.lang.Long) defaultValue(fields()[3]);
+        record.startTs = fieldSetFlags()[4] ? this.startTs : (java.lang.Long) defaultValue(fields()[4]);
+        record.endTs = fieldSetFlags()[5] ? this.endTs : (java.lang.Long) defaultValue(fields()[5]);
+        record.meanValue = fieldSetFlags()[6] ? this.meanValue : (java.lang.Double) defaultValue(fields()[6]);
+        record.minValue = fieldSetFlags()[7] ? this.minValue : (java.lang.Double) defaultValue(fields()[7]);
+        record.maxValue = fieldSetFlags()[8] ? this.maxValue : (java.lang.Double) defaultValue(fields()[8]);
+        record.err = fieldSetFlags()[9] ? this.err : (java.lang.Double) defaultValue(fields()[9]);
+        record.records = fieldSetFlags()[10] ? this.records : (java.util.List<net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent>) defaultValue(fields()[10]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -921,12 +993,20 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.id == null) {
+    if (this.factory == null) {
       out.writeIndex(0);
       out.writeNull();
     } else {
       out.writeIndex(1);
-      out.writeInt(this.id);
+      out.writeString(this.factory);
+    }
+
+    if (this.var_id == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeInt(this.var_id);
     }
 
     if (this.numberOfRecords == null) {
@@ -1015,9 +1095,16 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
     if (fieldOrder == null) {
       if (in.readIndex() != 1) {
         in.readNull();
-        this.id = null;
+        this.factory = null;
       } else {
-        this.id = in.readInt();
+        this.factory = in.readString();
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.var_id = null;
+      } else {
+        this.var_id = in.readInt();
       }
 
       if (in.readIndex() != 1) {
@@ -1095,18 +1182,27 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
       }
 
     } else {
-      for (int i = 0; i < 10; i++) {
+      for (int i = 0; i < 11; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
           if (in.readIndex() != 1) {
             in.readNull();
-            this.id = null;
+            this.factory = null;
           } else {
-            this.id = in.readInt();
+            this.factory = in.readString();
           }
           break;
 
         case 1:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.var_id = null;
+          } else {
+            this.var_id = in.readInt();
+          }
+          break;
+
+        case 2:
           if (in.readIndex() != 1) {
             in.readNull();
             this.numberOfRecords = null;
@@ -1115,7 +1211,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
           }
           break;
 
-        case 2:
+        case 3:
           if (in.readIndex() != 1) {
             in.readNull();
             this.meanTs = null;
@@ -1124,7 +1220,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
           }
           break;
 
-        case 3:
+        case 4:
           if (in.readIndex() != 1) {
             in.readNull();
             this.startTs = null;
@@ -1133,7 +1229,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
           }
           break;
 
-        case 4:
+        case 5:
           if (in.readIndex() != 1) {
             in.readNull();
             this.endTs = null;
@@ -1142,7 +1238,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
           }
           break;
 
-        case 5:
+        case 6:
           if (in.readIndex() != 1) {
             in.readNull();
             this.meanValue = null;
@@ -1151,7 +1247,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
           }
           break;
 
-        case 6:
+        case 7:
           if (in.readIndex() != 1) {
             in.readNull();
             this.minValue = null;
@@ -1160,7 +1256,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
           }
           break;
 
-        case 7:
+        case 8:
           if (in.readIndex() != 1) {
             in.readNull();
             this.maxValue = null;
@@ -1169,7 +1265,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
           }
           break;
 
-        case 8:
+        case 9:
           if (in.readIndex() != 1) {
             in.readNull();
             this.err = null;
@@ -1178,7 +1274,7 @@ public class ProcessedEvent extends org.apache.avro.specific.SpecificRecordBase 
           }
           break;
 
-        case 9:
+        case 10:
           long size0 = in.readArrayStart();
           java.util.List<net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent> a0 = this.records;
           if (a0 == null) {

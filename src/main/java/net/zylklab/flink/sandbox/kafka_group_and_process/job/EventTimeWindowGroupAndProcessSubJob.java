@@ -1,6 +1,8 @@
 package net.zylklab.flink.sandbox.kafka_group_and_process.job;
 
 import org.apache.flink.api.java.functions.KeySelector;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.util.Collector;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -34,22 +36,32 @@ public class EventTimeWindowGroupAndProcessSubJob {
 	private static final long WATERMARK_INTERVAL_MS 	= 1000l;
 
 	private static final String BOOTSTRAP_SERVERS = "amaterasu001.bigtdata.zylk.net:6667, amaterasu001.bigdata.zylk.net:6667";
-	private static final String GROUP_ID 		  = "flink-group-id";
+//	private static final String BOOTSTRAP_SERVERS = "kafka:9092"; //docker-compose service name
+	private static final String GROUP_ID 		  = "flink-consumer";
 	
 	private static final String SOURCE_TOPIC = "RAW-EVENT";	
 	private static final String SINK_TOPIC   = "PROCESSED-EVENT";
-	
-	private static final Integer TOPIC_PARTITIONS = 2;
+
+	private static final String FLINK_NODES = "flink-nodes";
+	private static final Integer DEFAULT_FLINK_NODES = 2;
+	private static Integer flinkNodes;
 	
 	public static void main(String[] args) throws Exception {
 		_log.debug("Starting application");
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		
+		ParameterTool parameters = ParameterTool.fromArgs(args);
+		if (parameters.has(FLINK_NODES)) {
+			flinkNodes = parameters.getInt(FLINK_NODES);
+		} else {
+			flinkNodes = DEFAULT_FLINK_NODES;
+		}
+		
 		env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 		env.getConfig().setAutoWatermarkInterval(WATERMARK_INTERVAL_MS);
 		
-		env.setParallelism(TOPIC_PARTITIONS);
-		env.setMaxParallelism(TOPIC_PARTITIONS);
+		env.setParallelism(flinkNodes);
+		env.setMaxParallelism(flinkNodes);
 		
 		_log.debug("Environment created.");
 		EventTimeWindowGroupAndProcessSubJob w = new EventTimeWindowGroupAndProcessSubJob();
@@ -61,7 +73,7 @@ public class EventTimeWindowGroupAndProcessSubJob {
 		
 		Properties props = new Properties();
 		props.setProperty("bootstrap.servers", BOOTSTRAP_SERVERS);
-		props.setProperty("group.id", 		   GROUP_ID);
+		props.setProperty("group.id",          GROUP_ID);
 
 		DataStream<RawEvent> dataStream = env
 				.addSource(new FlinkKafkaConsumer<>(SOURCE_TOPIC, new AvroDeserializationSchema<>(RawEvent.class), props))
@@ -88,20 +100,20 @@ public class EventTimeWindowGroupAndProcessSubJob {
 				});		
 		
 		dataStream
-			.keyBy(new KeySelector<RawEvent, Integer>() {
+			.keyBy(new KeySelector<RawEvent, Tuple2<String, Integer>>() {
 				private static final long serialVersionUID = 4026713945628697567L;
 				@Override
-				public Integer getKey(RawEvent event) throws Exception {
-					return event.getId();
+				public Tuple2<String, Integer> getKey(RawEvent event) throws Exception {
+					return new Tuple2<String, Integer>(event.getFactory(), event.getVarId());
 				}
 			})
 			.timeWindow(WINDOW_TIME_SIZE)
 			.allowedLateness(ALLOWED_LATENESS_TIME)
-			.process(new ProcessWindowFunction<RawEvent, ProcessedEvent, Integer, TimeWindow>() {
+			.process(new ProcessWindowFunction<RawEvent, ProcessedEvent, Tuple2<String, Integer>, TimeWindow>() {
 				private static final long serialVersionUID = 6850448280789756471L;
 				@Override
-				public void process(Integer key,
-						ProcessWindowFunction<RawEvent, ProcessedEvent, Integer, TimeWindow>.Context context,
+				public void process(Tuple2<String, Integer> key,
+						ProcessWindowFunction<RawEvent, ProcessedEvent, Tuple2<String, Integer>, TimeWindow>.Context context,
 						Iterable<RawEvent> in,
 						Collector<ProcessedEvent> out) throws Exception {
 
@@ -112,7 +124,7 @@ public class EventTimeWindowGroupAndProcessSubJob {
 					Double maxValue = Double.MIN_VALUE;
 					Long numberOfRecords = 0L;
 					
-					Long sumTs = 0L; 		// need to compute mean timestamp
+					Long sumTs = 0L;      	// need to compute mean timestamp
 					Double sumValues = 0D;	// need to compute mean value
 					
 					List<Double> values = new ArrayList<Double>();	// need to compute cuadratic error
@@ -143,11 +155,12 @@ public class EventTimeWindowGroupAndProcessSubJob {
 					}		
 					Double err = Math.sqrt(sumERCM/numberOfRecords);
 								
-					out.collect(new ProcessedEvent(key, numberOfRecords, meanTs, startTs, endTs, meanValue, minValue, maxValue, err, records));
+					out.collect(new ProcessedEvent(key.f0, key.f1 , numberOfRecords, meanTs, startTs, endTs, meanValue, minValue, maxValue, err, records));
 //					System.out.println("Thread ID: " + Thread.currentThread().getId() + "\nNumber of events: " + numberOfRecords);
 				}
-			}).setParallelism(TOPIC_PARTITIONS)
+			}).setParallelism(flinkNodes)
 			.addSink(new FlinkKafkaProducer<>(BOOTSTRAP_SERVERS, SINK_TOPIC, new AvroSerializationSchema<ProcessedEvent>(ProcessedEvent.class)))
+			.setParallelism(flinkNodes)
 			;
 
 	}

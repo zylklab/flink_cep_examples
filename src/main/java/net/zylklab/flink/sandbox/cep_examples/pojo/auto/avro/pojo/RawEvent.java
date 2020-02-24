@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 3347475857288145292L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"RawEvent\",\"namespace\":\"net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo\",\"fields\":[{\"name\":\"id\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"value\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"timestamp\",\"type\":[\"null\",\"long\"],\"default\":null}]}");
+  private static final long serialVersionUID = 9116289356387623225L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"RawEvent\",\"namespace\":\"net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo\",\"fields\":[{\"name\":\"factory\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"var_id\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"value\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"timestamp\",\"type\":[\"null\",\"long\"],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -71,7 +71,8 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.Integer id;
+  @Deprecated public java.lang.String factory;
+  @Deprecated public java.lang.Integer var_id;
   @Deprecated public java.lang.Double value;
   @Deprecated public java.lang.Long timestamp;
 
@@ -84,12 +85,14 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
 
   /**
    * All-args constructor.
-   * @param id The new value for id
+   * @param factory The new value for factory
+   * @param var_id The new value for var_id
    * @param value The new value for value
    * @param timestamp The new value for timestamp
    */
-  public RawEvent(java.lang.Integer id, java.lang.Double value, java.lang.Long timestamp) {
-    this.id = id;
+  public RawEvent(java.lang.String factory, java.lang.Integer var_id, java.lang.Double value, java.lang.Long timestamp) {
+    this.factory = factory;
+    this.var_id = var_id;
     this.value = value;
     this.timestamp = timestamp;
   }
@@ -99,9 +102,10 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return id;
-    case 1: return value;
-    case 2: return timestamp;
+    case 0: return factory;
+    case 1: return var_id;
+    case 2: return value;
+    case 3: return timestamp;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -110,28 +114,46 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: id = (java.lang.Integer)value$; break;
-    case 1: value = (java.lang.Double)value$; break;
-    case 2: timestamp = (java.lang.Long)value$; break;
+    case 0: factory = (java.lang.String)value$; break;
+    case 1: var_id = (java.lang.Integer)value$; break;
+    case 2: value = (java.lang.Double)value$; break;
+    case 3: timestamp = (java.lang.Long)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
 
   /**
-   * Gets the value of the 'id' field.
-   * @return The value of the 'id' field.
+   * Gets the value of the 'factory' field.
+   * @return The value of the 'factory' field.
    */
-  public java.lang.Integer getId() {
-    return id;
+  public java.lang.String getFactory() {
+    return factory;
   }
 
 
   /**
-   * Sets the value of the 'id' field.
+   * Sets the value of the 'factory' field.
    * @param value the value to set.
    */
-  public void setId(java.lang.Integer value) {
-    this.id = value;
+  public void setFactory(java.lang.String value) {
+    this.factory = value;
+  }
+
+  /**
+   * Gets the value of the 'var_id' field.
+   * @return The value of the 'var_id' field.
+   */
+  public java.lang.Integer getVarId() {
+    return var_id;
+  }
+
+
+  /**
+   * Sets the value of the 'var_id' field.
+   * @param value the value to set.
+   */
+  public void setVarId(java.lang.Integer value) {
+    this.var_id = value;
   }
 
   /**
@@ -208,7 +230,8 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<RawEvent>
     implements org.apache.avro.data.RecordBuilder<RawEvent> {
 
-    private java.lang.Integer id;
+    private java.lang.String factory;
+    private java.lang.Integer var_id;
     private java.lang.Double value;
     private java.lang.Long timestamp;
 
@@ -223,17 +246,21 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
      */
     private Builder(net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.factory)) {
+        this.factory = data().deepCopy(fields()[0].schema(), other.factory);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.value)) {
-        this.value = data().deepCopy(fields()[1].schema(), other.value);
+      if (isValidValue(fields()[1], other.var_id)) {
+        this.var_id = data().deepCopy(fields()[1].schema(), other.var_id);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.timestamp)) {
-        this.timestamp = data().deepCopy(fields()[2].schema(), other.timestamp);
+      if (isValidValue(fields()[2], other.value)) {
+        this.value = data().deepCopy(fields()[2].schema(), other.value);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
+      }
+      if (isValidValue(fields()[3], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[3].schema(), other.timestamp);
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
     }
 
@@ -243,57 +270,101 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
      */
     private Builder(net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent other) {
       super(SCHEMA$);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.factory)) {
+        this.factory = data().deepCopy(fields()[0].schema(), other.factory);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.value)) {
-        this.value = data().deepCopy(fields()[1].schema(), other.value);
+      if (isValidValue(fields()[1], other.var_id)) {
+        this.var_id = data().deepCopy(fields()[1].schema(), other.var_id);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.timestamp)) {
-        this.timestamp = data().deepCopy(fields()[2].schema(), other.timestamp);
+      if (isValidValue(fields()[2], other.value)) {
+        this.value = data().deepCopy(fields()[2].schema(), other.value);
         fieldSetFlags()[2] = true;
+      }
+      if (isValidValue(fields()[3], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[3].schema(), other.timestamp);
+        fieldSetFlags()[3] = true;
       }
     }
 
     /**
-      * Gets the value of the 'id' field.
+      * Gets the value of the 'factory' field.
       * @return The value.
       */
-    public java.lang.Integer getId() {
-      return id;
+    public java.lang.String getFactory() {
+      return factory;
     }
 
 
     /**
-      * Sets the value of the 'id' field.
-      * @param value The value of 'id'.
+      * Sets the value of the 'factory' field.
+      * @param value The value of 'factory'.
       * @return This builder.
       */
-    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder setId(java.lang.Integer value) {
+    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder setFactory(java.lang.String value) {
       validate(fields()[0], value);
-      this.id = value;
+      this.factory = value;
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'id' field has been set.
-      * @return True if the 'id' field has been set, false otherwise.
+      * Checks whether the 'factory' field has been set.
+      * @return True if the 'factory' field has been set, false otherwise.
       */
-    public boolean hasId() {
+    public boolean hasFactory() {
       return fieldSetFlags()[0];
     }
 
 
     /**
-      * Clears the value of the 'id' field.
+      * Clears the value of the 'factory' field.
       * @return This builder.
       */
-    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder clearId() {
-      id = null;
+    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder clearFactory() {
+      factory = null;
       fieldSetFlags()[0] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'var_id' field.
+      * @return The value.
+      */
+    public java.lang.Integer getVarId() {
+      return var_id;
+    }
+
+
+    /**
+      * Sets the value of the 'var_id' field.
+      * @param value The value of 'var_id'.
+      * @return This builder.
+      */
+    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder setVarId(java.lang.Integer value) {
+      validate(fields()[1], value);
+      this.var_id = value;
+      fieldSetFlags()[1] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'var_id' field has been set.
+      * @return True if the 'var_id' field has been set, false otherwise.
+      */
+    public boolean hasVarId() {
+      return fieldSetFlags()[1];
+    }
+
+
+    /**
+      * Clears the value of the 'var_id' field.
+      * @return This builder.
+      */
+    public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder clearVarId() {
+      var_id = null;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -312,9 +383,9 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder setValue(java.lang.Double value) {
-      validate(fields()[1], value);
+      validate(fields()[2], value);
       this.value = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -323,7 +394,7 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
       * @return True if the 'value' field has been set, false otherwise.
       */
     public boolean hasValue() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[2];
     }
 
 
@@ -333,7 +404,7 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder clearValue() {
       value = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -352,9 +423,9 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
       * @return This builder.
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder setTimestamp(java.lang.Long value) {
-      validate(fields()[2], value);
+      validate(fields()[3], value);
       this.timestamp = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -363,7 +434,7 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
       * @return True if the 'timestamp' field has been set, false otherwise.
       */
     public boolean hasTimestamp() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[3];
     }
 
 
@@ -373,7 +444,7 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
       */
     public net.zylklab.flink.sandbox.cep_examples.pojo.auto.avro.pojo.RawEvent.Builder clearTimestamp() {
       timestamp = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -382,9 +453,10 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
     public RawEvent build() {
       try {
         RawEvent record = new RawEvent();
-        record.id = fieldSetFlags()[0] ? this.id : (java.lang.Integer) defaultValue(fields()[0]);
-        record.value = fieldSetFlags()[1] ? this.value : (java.lang.Double) defaultValue(fields()[1]);
-        record.timestamp = fieldSetFlags()[2] ? this.timestamp : (java.lang.Long) defaultValue(fields()[2]);
+        record.factory = fieldSetFlags()[0] ? this.factory : (java.lang.String) defaultValue(fields()[0]);
+        record.var_id = fieldSetFlags()[1] ? this.var_id : (java.lang.Integer) defaultValue(fields()[1]);
+        record.value = fieldSetFlags()[2] ? this.value : (java.lang.Double) defaultValue(fields()[2]);
+        record.timestamp = fieldSetFlags()[3] ? this.timestamp : (java.lang.Long) defaultValue(fields()[3]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -417,12 +489,20 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    if (this.id == null) {
+    if (this.factory == null) {
       out.writeIndex(0);
       out.writeNull();
     } else {
       out.writeIndex(1);
-      out.writeInt(this.id);
+      out.writeString(this.factory);
+    }
+
+    if (this.var_id == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeInt(this.var_id);
     }
 
     if (this.value == null) {
@@ -450,9 +530,16 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
     if (fieldOrder == null) {
       if (in.readIndex() != 1) {
         in.readNull();
-        this.id = null;
+        this.factory = null;
       } else {
-        this.id = in.readInt();
+        this.factory = in.readString();
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.var_id = null;
+      } else {
+        this.var_id = in.readInt();
       }
 
       if (in.readIndex() != 1) {
@@ -470,18 +557,27 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
       }
 
     } else {
-      for (int i = 0; i < 3; i++) {
+      for (int i = 0; i < 4; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
           if (in.readIndex() != 1) {
             in.readNull();
-            this.id = null;
+            this.factory = null;
           } else {
-            this.id = in.readInt();
+            this.factory = in.readString();
           }
           break;
 
         case 1:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.var_id = null;
+          } else {
+            this.var_id = in.readInt();
+          }
+          break;
+
+        case 2:
           if (in.readIndex() != 1) {
             in.readNull();
             this.value = null;
@@ -490,7 +586,7 @@ public class RawEvent extends org.apache.avro.specific.SpecificRecordBase implem
           }
           break;
 
-        case 2:
+        case 3:
           if (in.readIndex() != 1) {
             in.readNull();
             this.timestamp = null;

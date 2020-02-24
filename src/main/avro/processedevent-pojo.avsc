@@ -4,15 +4,16 @@
 	"name": "ProcessedEvent",
 	"fields": 
 	[
-		{"name": "id",					"type": ["null","int"], 	"default": null},
-		{"name": "numberOfRecords",		"type": ["null","long"], 	"default": null},
-		{"name": "meanTs",				"type": ["null","long"], 	"default": null},
-		{"name": "startTs",				"type": ["null","long"], 	"default": null},
-		{"name": "endTs",				"type": ["null","long"], 	"default": null},
-		{"name": "meanValue",			"type": ["null","double"], 	"default": null},
-		{"name": "minValue",			"type": ["null","double"], 	"default": null},
-		{"name": "maxValue",			"type": ["null","double"], 	"default": null},
-		{"name": "err",					"type": ["null","double"], 	"default": null},
+		{"name": "factory",				"type": ["null","string"],	"default": null},
+		{"name": "var_id",				"type": ["null","int"],		"default": null},
+		{"name": "numberOfRecords",		"type": ["null","long"],	"default": null},
+		{"name": "meanTs",				"type": ["null","long"],	"default": null},
+		{"name": "startTs",				"type": ["null","long"],	"default": null},
+		{"name": "endTs",				"type": ["null","long"],	"default": null},
+		{"name": "meanValue",			"type": ["null","double"],	"default": null},
+		{"name": "minValue",			"type": ["null","double"],	"default": null},
+		{"name": "maxValue",			"type": ["null","double"],	"default": null},
+		{"name": "err",					"type": ["null","double"],	"default": null},
 		{
 			"name": "records",
 			"type": {
@@ -22,9 +23,10 @@
 					"name": "RawEvent",
 					"fields": 
 					[
-						{"name": "id",			"type": ["null","int"], 	"default": null},
-						{"name": "value",		"type": ["null","double"], 	"default": null},
-						{"name": "timestamp",	"type": ["null","long"], 	"default": null}
+						{"name": "factory",			"type": ["null","string"],	"default": null},
+						{"name": "var_id",			"type": ["null","int"],		"default": null},
+						{"name": "value",			"type": ["null","double"],	"default": null},
+						{"name": "timestamp",		"type": ["null","long"],	"default": null}
 					]
 				}
 			}
