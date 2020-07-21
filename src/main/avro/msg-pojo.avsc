@@ -1,0 +1,12 @@
+{
+    "namespace": "net.zylklab.flink.sandbox.broadcaststate.pojo",
+	"type": "record",
+	"name": "Event",
+	"fields": 
+	[
+		{"name": "var_id",			"type": ["null","string"],	"default": null},
+		{"name": "var_name",			"type": ["null","string"],		"default": null},
+		{"name": "value",			"type": ["null","double"],	"default": null},
+		{"name": "ts",		"type": ["null","long"],	"default": null}
+	]
+}

@@ -1,0 +1,12 @@
+{
+    "namespace": "net.zylklab.flink.sandbox.broadcaststate.pojo",
+	"type": "record",
+	"name": "Limit",
+	"fields": 
+	[
+		{"name": "var_id",			"type": ["null","string"],	"default": null},
+		{"name": "var_name",			"type": ["null","string"],		"default": null},
+		{"name": "max_limit",			"type": ["null","double"],	"default": null},
+		{"name": "min_limit",			"type": ["null","double"],	"default": null}
+	]
+}
