@@ -188,7 +188,7 @@ There is a IoT device counting the numbers of different events in a zone (for ex
 * **WINDOW_TIME_SIZE** the size (time) of the window
 * **ALLOWED_LATENESS_TIME** the time that an already processed window can be reprocessed if an event belonging to this window arraives
 * **MAX_OUT_OF_ORDERNESS_MS** the maximum time it takes for a window to launch for the first time, allows waiting for messy events to arrive without getting lost
-* WATERMARK_INTERVAL_MS the interval (time) in which the watermark will be updated
+* **WATERMARK_INTERVAL_MS** the interval (time) in which the watermark will be updated
 * **BOOTSTRAP_SERVERS** the kafka broker list
 * **GROUP_ID** the consumer group name
 * **SOURCE_TOPIC** the raw events kafka topic
@@ -217,17 +217,17 @@ The processed events are sent back to a Kafka topic (*SINK_TOPIC*), consumed by 
   LOCATION "/processed_events"
 ```
   where *LOCATION* path is the HDFS location where processed events are stored.
-  
+
   ## Fifth one (Flink broadcast state)
-  
+
   There is IoT device sending messages to Kafka in Avro type with the value of some metric that has to be within some limits:
-  
+
   ```avro
   {
     "namespace": "net.zylklab.flink.sandbox.broadcaststate.pojo",
 	"type": "record",
 	"name": "Event",
-	"fields": 
+	"fields":
 	[
 		{"name": "var_id",			"type": ["null","string"],	"default": null},
 		{"name": "var_name",			"type": ["null","string"],		"default": null},
@@ -244,7 +244,7 @@ These value's max and min limit could change over time so there is another Kafka
     "namespace": "net.zylklab.flink.sandbox.broadcaststate.pojo",
 	"type": "record",
 	"name": "Limit",
-	"fields": 
+	"fields":
 	[
 		{"name": "var_id",			"type": ["null","string"],	"default": null},
 		{"name": "var_name",			"type": ["null","string"],		"default": null},
@@ -256,3 +256,22 @@ These value's max and min limit could change over time so there is another Kafka
 
 The Flink job consumes from both topics and process events comparing its values with its limits. When a new limit is published to Kafka, the job updates the limit without the need of restarting the job.
 
+## Order an unordered stream of events
+
+There is a IoT device counting the numbers of different events in a zone (for example the number of cars, bicycles and motorbikes crossing a point). These events are sent to a Kafka topic, serialized as Avro type events. This is simulated as events sent to a Kafka topic from NiFi flow. These events are not produced in an orderly fashion and, in varous processes this can be a problem.
+
+The class `net.zylklab.flink.sandbox.unordered_events.UnorderedEventsJob` defines a Flink job that consumes unordered data from a Kafka topic, arrange it and it sent the ordered data back to a Kafka topic. In order to do that, this class uses the `net.zylklab.flink.sandbox.unordered_events.BufferedKeyedProcessFunction` class.
+
+The main parameters to take in count are located in `net.zylklab.flink.sandbox.unordered_events.UnorderedEventsJob`:
+
+```java
+private static final Integer WATERMARK_INTERVAL_MS = 500;
+private static final Integer MAX_OUT_OF_ORDERNESS_MS = 1000;
+private static final Integer MAX_WAIT_FOR_EVENTS_SEC = 60;
+```
+
+where
+
+- **WATERMARK_INTERVAL_MS**: the interval (time) in which the watermark will be updated.
+- **MAX_OUT_OF_ORDERNESS_MS**: the maximum time it takes for a watermark to launch for the first time, allows waiting for messy events to arrive without getting lost.
+- **MAX_WAIT_FOR_EVENTS_SEC**: When consuming from a Kafka topic with more than one partition, it can happen that a partition stops sending events (this usually happens when topic is partitioned by key). This _MAX_WAIT_FOR_EVENTS_SEC_ defines the time that the job will wait for new data from each partition.
